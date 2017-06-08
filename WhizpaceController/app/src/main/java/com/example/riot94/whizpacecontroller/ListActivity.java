@@ -85,7 +85,7 @@ public class ListActivity extends AppCompatActivity {
                     String comd = in.getText().toString();
                     String output = null;
                     try {
-                        final JSchConnectionProtocol jsch = new JSchConnectionProtocol(getBaseContext(), host, user, pass);
+                        final JSchConnectionProtocol jsch = new JSchConnectionProtocol(host, user, pass);
                         output = jsch.execute(comd).get();
                     } catch (InterruptedException e) {
                         e.printStackTrace();

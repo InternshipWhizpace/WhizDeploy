@@ -17,17 +17,23 @@ import com.jcraft.jsch.Session;
  */
 
 public class JSchConnectionProtocol extends AsyncTask<String, Void, String>{
-    private Context c;
     private String host;
     private String user;
     private String password;
 
-    public JSchConnectionProtocol(Context con, String h, String u, String p){
-        c = con;
+    public JSchConnectionProtocol(String h, String u, String p){
         host = h;
         user = u;
         password = p;
     }
+
+    /*
+    The server/shell is misconfigured somehow. It does not set the PATH correctly, when a shell session is not started.
+    That's, why the ifconfig/iwconfig binaries cannot be found.
+    Either fix your startup scripts to set the PATH correctly for all situations. Or use a full path to the ifconfig/iwconfig.
+    To find the full path, open a regular shell session using your SSH client and type:
+    which ifconfig
+     */
 
     @Override
     protected String doInBackground(String... command) {
@@ -71,7 +77,6 @@ public class JSchConnectionProtocol extends AsyncTask<String, Void, String>{
                 int i=in.read(tmp, 0, 1024);
                 if(i<0)break;
                 String output = new String(tmp, 0, i);
-                Toast.makeText(c,output,Toast.LENGTH_SHORT);
                 totalOutput += output;
                 if (output.length()>200){
                     channel.sendSignal("2");
