@@ -86,7 +86,7 @@ public class ListActivity extends AppCompatActivity {
                     String output = null;
                     try {
                         final JSchConnectionProtocol jsch = new JSchConnectionProtocol(host, user, pass);
-                        output = jsch.execute(comd).get().replace("  ","\n");
+                        output = swapSpacesForLine(jsch.execute(comd).get());
                     } catch (InterruptedException e) {
                         Log.d("InterruptedException",e.getLocalizedMessage());
                         e.printStackTrace();
@@ -105,5 +105,16 @@ public class ListActivity extends AppCompatActivity {
             e.printStackTrace();
             finish();
         }
+    }
+
+    private String swapSpacesForLine(String s){
+        for (int i=8; i>1; i--){
+            String spaces = "";
+            for (int j=0; j<i; j++){
+                spaces += " ";
+            }
+            s = s.replace(spaces, "\n");
+        }
+        return s;
     }
 }
