@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
         submit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(getBaseContext(), ListActivity.class);
+                Intent intent = new Intent(getBaseContext(), TabbedActivity.class);
                 intent.putExtra("HOST", host.getText().toString());
                 intent.putExtra("USER", user.getText().toString());
                 intent.putExtra("PASS", password.getText().toString());

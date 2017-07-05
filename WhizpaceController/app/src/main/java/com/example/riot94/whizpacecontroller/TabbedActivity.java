@@ -1,5 +1,6 @@
 package com.example.riot94.whizpacecontroller;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -11,13 +12,17 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.Button;
 import android.widget.TextView;
+
+import java.util.concurrent.ExecutionException;
 
 public class TabbedActivity extends AppCompatActivity {
 
@@ -35,6 +40,12 @@ public class TabbedActivity extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+    private String host;
+    private String user;
+    private String pass;
+    private static String ifconfig;
+    private static String iwconfig;
+    private Button ccl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,17 +65,52 @@ public class TabbedActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+        host = getIntent().getStringExtra("HOST");
+        user = getIntent().getStringExtra("USER");
+        pass = getIntent().getStringExtra("PASS");
+
+        ifconfig = getIwconfig();
+        iwconfig = getIwconfig();
+
+        ccl = (Button) findViewById(R.id.ccl);
+
+        ccl.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(), ListActivity.class);
+                startActivity(intent);
             }
         });
-
     }
 
+    public String getIfconfig(){
+        String output = "getIfconfig() failed";
+        try {
+            final JSchConnectionProtocol jsch = new JSchConnectionProtocol(host, user, pass);
+            output = jsch.execute("/sbin/ifconfig").get();
+        } catch (InterruptedException e) {
+            Log.d("InterruptedException",e.getLocalizedMessage());
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+            Log.d("ExecutionException",e.getLocalizedMessage());
+        }
+        return output;
+    }
+
+    public String getIwconfig(){
+        String output = "getIfconfig() failed";
+        try {
+            final JSchConnectionProtocol jsch = new JSchConnectionProtocol(host, user, pass);
+            output = jsch.execute("/usr/sbin/iwconfig").get();
+        } catch (InterruptedException e) {
+            Log.d("InterruptedException",e.getLocalizedMessage());
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+            Log.d("ExecutionException",e.getLocalizedMessage());
+        }
+        return output;
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -114,11 +160,19 @@ public class TabbedActivity extends AppCompatActivity {
         }
 
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_tabbed, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            View rootView;
+            if (getArguments().getInt(ARG_SECTION_NUMBER)==0){
+                rootView = inflater.inflate(R.layout.fragment_tabbed_options, container, false);
+            }else {
+                rootView = inflater.inflate(R.layout.fragment_tabbed, container, false);
+                TextView textView = (TextView) rootView.findViewById(R.id.section_label);
+                if (getArguments().getInt(ARG_SECTION_NUMBER) == 1) {
+                    textView.setText(ifconfig);
+                } else if (getArguments().getInt(ARG_SECTION_NUMBER) == 2) {
+                    textView.setText(iwconfig);
+                }
+            }
             return rootView;
         }
     }
@@ -150,11 +204,11 @@ public class TabbedActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "SECTION 1";
+                    return "ifconfig";
                 case 1:
-                    return "SECTION 2";
+                    return "iwconfig";
                 case 2:
-                    return "SECTION 3";
+                    return "Options";
             }
             return null;
         }
