@@ -73,13 +73,14 @@ public class TabbedActivity extends AppCompatActivity {
         iwconfig = getIwconfig();
 
         ccl = (Button) findViewById(R.id.ccl);
-
+/*
         ccl.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(getBaseContext(), ListActivity.class);
                 startActivity(intent);
             }
         });
+        */
     }
 
     public String getIfconfig(){
