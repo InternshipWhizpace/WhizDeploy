@@ -86,11 +86,13 @@ public class ListActivity extends AppCompatActivity {
                     String output = null;
                     try {
                         final JSchConnectionProtocol jsch = new JSchConnectionProtocol(host, user, pass);
-                        output = jsch.execute(comd).get();
+                        output = jsch.execute(comd).get().replace("  ","\n");
                     } catch (InterruptedException e) {
+                        Log.d("InterruptedException",e.getLocalizedMessage());
                         e.printStackTrace();
                     } catch (ExecutionException e) {
                         e.printStackTrace();
+                        Log.d("ExecutionException",e.getLocalizedMessage());
                     }
                     Toast.makeText(getBaseContext(), output, Toast.LENGTH_LONG).show();
                     list.add(new Item(comd, output));

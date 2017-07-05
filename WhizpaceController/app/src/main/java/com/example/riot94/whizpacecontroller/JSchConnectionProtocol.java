@@ -75,7 +75,9 @@ public class JSchConnectionProtocol extends AsyncTask<String, Void, String>{
         while(true){
             while(in.available()>0){
                 int i=in.read(tmp, 0, 1024);
-                if(i<0)break;
+                if(i<0){
+                    break;
+                }
                 String output = new String(tmp, 0, i);
                 totalOutput += output;
                 if (output.length()>200){

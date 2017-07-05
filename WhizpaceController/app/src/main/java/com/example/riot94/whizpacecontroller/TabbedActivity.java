@@ -1,5 +1,6 @@
 package com.example.riot94.whizpacecontroller;
 
+import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -18,7 +19,7 @@ import android.view.ViewGroup;
 
 import android.widget.TextView;
 
-public class ConnectedActivity extends AppCompatActivity {
+public class TabbedActivity extends AppCompatActivity {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -38,7 +39,7 @@ public class ConnectedActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_connected);
+        setContentView(R.layout.activity_tabbed);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -50,6 +51,8 @@ public class ConnectedActivity extends AppCompatActivity {
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(mViewPager);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -66,7 +69,7 @@ public class ConnectedActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_connected, menu);
+        getMenuInflater().inflate(R.menu.menu_tabbed, menu);
         return true;
     }
 
@@ -113,7 +116,7 @@ public class ConnectedActivity extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_connected, container, false);
+            View rootView = inflater.inflate(R.layout.fragment_tabbed, container, false);
             TextView textView = (TextView) rootView.findViewById(R.id.section_label);
             textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
             return rootView;
@@ -147,11 +150,11 @@ public class ConnectedActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "iwconfig";
+                    return "SECTION 1";
                 case 1:
-                    return "ifconfig";
+                    return "SECTION 2";
                 case 2:
-                    return "Command";
+                    return "SECTION 3";
             }
             return null;
         }

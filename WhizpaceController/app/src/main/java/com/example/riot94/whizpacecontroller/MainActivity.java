@@ -23,10 +23,13 @@ public class MainActivity extends AppCompatActivity {
         user = (EditText) findViewById(R.id.user);
         password = (EditText) findViewById(R.id.password);
 
+        /* /sbin/ifconfig
+        *  /usr/sbin/iwconfig*/
+
         /* testing purposes*/
-        host.setText("192.168.1.41");
+        host.setText("192.168.100.41");
         user.setText("root");
-        password.setText("tvws");
+        password.setText("ami");
 
         submit = (Button) findViewById(R.id.submit);
 
