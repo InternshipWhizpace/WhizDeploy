@@ -77,6 +77,9 @@ public class TabbedActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getBaseContext(), ListActivity.class);
+                intent.putExtra("HOST", host);
+                intent.putExtra("USER", user);
+                intent.putExtra("PASS", pass);
                 startActivity(intent);
             }
         });
