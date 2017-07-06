@@ -72,15 +72,14 @@ public class TabbedActivity extends AppCompatActivity {
         ifconfig = getIwconfig();
         iwconfig = getIwconfig();
 
-        ccl = (Button) findViewById(R.id.ccl);
-/*
-        ccl.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 Intent intent = new Intent(getBaseContext(), ListActivity.class);
                 startActivity(intent);
             }
         });
-        */
     }
 
     public String getIfconfig(){
@@ -162,17 +161,12 @@ public class TabbedActivity extends AppCompatActivity {
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            View rootView;
-            if (getArguments().getInt(ARG_SECTION_NUMBER)==0){
-                rootView = inflater.inflate(R.layout.fragment_tabbed_options, container, false);
-            }else {
-                rootView = inflater.inflate(R.layout.fragment_tabbed, container, false);
-                TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-                if (getArguments().getInt(ARG_SECTION_NUMBER) == 1) {
-                    textView.setText(ifconfig);
-                } else if (getArguments().getInt(ARG_SECTION_NUMBER) == 2) {
-                    textView.setText(iwconfig);
-                }
+            View rootView = inflater.inflate(R.layout.fragment_tabbed, container, false);
+            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
+            if (getArguments().getInt(ARG_SECTION_NUMBER) == 1) {
+                textView.setText(ifconfig);
+            } else if (getArguments().getInt(ARG_SECTION_NUMBER) == 2) {
+                textView.setText(iwconfig);
             }
             return rootView;
         }
@@ -198,7 +192,7 @@ public class TabbedActivity extends AppCompatActivity {
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 3;
+            return 2;
         }
 
         @Override
@@ -208,8 +202,6 @@ public class TabbedActivity extends AppCompatActivity {
                     return "ifconfig";
                 case 1:
                     return "iwconfig";
-                case 2:
-                    return "Options";
             }
             return null;
         }
