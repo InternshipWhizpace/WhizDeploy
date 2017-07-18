@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Whizpace Controller</string>
+    <string name="app_name">WhizDeploy</string>
     <string name="comdLine"><![CDATA[>>]]></string>
     <string name="send">send</string>
     <string name="output">output</string>
@@ -9,8 +9,7 @@
     <string name="host">Host</string>
     <string name="password">Password</string>
     <string name="user">User</string>
-    <string name="title_activity_connected">ConnectedActivity</string>
+    <string name="title_activity_connected">Connected</string>
     <string name="action_settings">Settings</string>
-    <string name="section_format">Hello World from section: %1$d</string>
-    <string name="title_activity_tabbed">TabbedActivity</string>
+    <string name="title_activity_tabbed">IFCONFIG/IWCONFIG</string>
 </resources>

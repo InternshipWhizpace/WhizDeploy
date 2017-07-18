@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/WhizDeploy/WhizDeploy.iml" filepath="$PROJECT_DIR$/WhizDeploy/WhizDeploy.iml" />
       <module fileurl="file://$PROJECT_DIR$/WhizpaceController.iml" filepath="$PROJECT_DIR$/WhizpaceController.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/jsch-0.1.54/jsch-0.1.54.iml" filepath="$PROJECT_DIR$/jsch-0.1.54/jsch-0.1.54.iml" />
     </modules>
   </component>

@@ -8,7 +8,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/WhizDeploy" />
             <option value="$PROJECT_DIR$/jsch-0.1.54" />
           </set>
         </option>
