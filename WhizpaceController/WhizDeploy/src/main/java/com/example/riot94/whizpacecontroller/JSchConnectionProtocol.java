@@ -1,40 +1,48 @@
 package com.example.riot94.whizpacecontroller;
-import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
 
-import java.io.IOException;
 import java.io.InputStream;
 
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.JSch;
-import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
-/**
- * Created by riot94 on 1/6/2017.
- */
+/*!
+  A class used to create a JSch object and run the object
 
+  Created by Ryan Tan on 1/6/2017.
+*/
 public class JSchConnectionProtocol extends AsyncTask<String, Void, String>{
+    /*!
+      A String representing the host's IP Address that the user is trying to connect to.
+    */
     private String host;
+
+    /*!
+      A String representing the username that the user is trying to connect to the SSH Server with.
+    */
     private String user;
+
+    /*!
+      A String representing the password that the user is trying to connect to the SSH Server with.
+    */
     private String password;
 
+    /*!
+      Contructs a new JSchConnectionProtocol object to connect to an SSH Server with the provided host IP, h, username, u, and password, p.
+     */
     public JSchConnectionProtocol(String h, String u, String p){
         host = h;
         user = u;
         password = p;
     }
 
-    /*
-    The server/shell is misconfigured somehow. It does not set the PATH correctly, when a shell session is not started.
-    That's, why the ifconfig/iwconfig binaries cannot be found.
-    Either fix your startup scripts to set the PATH correctly for all situations. Or use a full path to the ifconfig/iwconfig.
-    To find the full path, open a regular shell session using your SSH client and type:
-    which ifconfig
-     */
+    /*!
+      Overrides AsyncTask's doInBackground method and sends command to the SSH Server.
 
+      Returns the output from the SSH Server.
+    */
     @Override
     protected String doInBackground(String... command) {
         String output = "";
@@ -67,6 +75,11 @@ public class JSchConnectionProtocol extends AsyncTask<String, Void, String>{
         return output;
     }
 
+    /*!
+      Prints the output generated from the SSH Server after every X MilliSeconds
+
+      Returns the full output from the SSH Server for the given command.
+    */
     private String printOutputAfterXMilliSeconds(Channel channel, int ms) throws Exception {
         InputStream in=channel.getInputStream();
         channel.connect();

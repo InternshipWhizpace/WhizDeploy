@@ -10,9 +10,12 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-/**
- * Created by riot94 on 29/5/2017.
- */
+/*!
+Adapted from https://github.com/codepath/android_guides/wiki/Using-the-RecyclerView.
+See section on Creating the RecyclerView.Adapter
+
+Created by Ryan Tan on 29/5/2017.
+*/
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
@@ -37,18 +40,26 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         }
     }
 
-    // Store a member variable for the contacts
+    /*!
+    ArrayList of Items storing the input input commands and output Strings from the SSH Server.
+     */
     private ArrayList<Item> mCommands;
-    // Store the context for easy access
+    /*!
+    Context is stored for easy access.
+     */
     private Context mContext;
 
-    // Pass in the contact array into the constructor
+    /*!
+    Constructor for a new MyAdapter.
+     */
     public MyAdapter(Context context, ArrayList<Item> commands) {
         mCommands = commands;
         mContext = context;
     }
 
-    // Easy access to the context object in the recyclerview
+    /*!
+    Getter to return the Context.
+     */
     private Context getContext() {
         return mContext;
     }
@@ -82,7 +93,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         output.setText(command.getTruncated());
     }
 
-    // Returns the total count of items in the list
+    /*!
+    Returns the total count of items in the list
+     */
     @Override
     public int getItemCount() {
         return mCommands.size();

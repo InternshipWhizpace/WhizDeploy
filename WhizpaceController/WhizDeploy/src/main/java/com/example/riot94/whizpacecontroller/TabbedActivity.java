@@ -24,6 +24,15 @@ import android.widget.TextView;
 
 import java.util.concurrent.ExecutionException;
 
+/*!
+  An Activity used to display outputs from the ifconfig and iwconfig commands. They have been hardcoded into the application due to a known issue with the SSH Server. See Author's Note for more info.
+
+  Author's Note: The server/shell is misconfigured somehow. It does not set the PATH correctly, when a shell session is not started.
+  That's, why the ifconfig/iwconfig binaries cannot be found.
+  Either fix your startup scripts to set the PATH correctly for all situations. Or use a full path to the ifconfig/iwconfig.
+  To find the full path of a command, i.e. "ifconfig", open a regular shell session using your SSH client and type:
+  "which ifconfig"
+*/
 public class TabbedActivity extends AppCompatActivity {
 
     /**
@@ -40,13 +49,36 @@ public class TabbedActivity extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
-    private String host;
-    private String user;
-    private String pass;
-    private static String ifconfig;
-    private static String iwconfig;
-    private Button ccl;
 
+    /*!
+      A String representing the host's IP Address that the user is trying to connect to.
+    */
+    private String host;
+
+    /*!
+      A String representing the username that the user is trying to connect to the SSH Server with.
+    */
+    private String user;
+
+    /*!
+      A String representing the password that the user is trying to connect to the SSH Server with.
+    */
+    private String pass;
+
+    /*!
+      A String representing the full output from the command, ifconfig.
+    */
+    private static String ifconfig;
+
+    /*!
+      A String representing the full output from the command, iwconfig.
+    */
+    private static String iwconfig;
+
+    /*!
+      Initialises the TabbedActivity, searches for all components with the corresponding id's in the relevant xml file, and sets the correct values accordingly.
+      Upon creation, the Activity attempts to connect to the SSH Server with the given host IP Address, username and password.
+    */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,6 +117,11 @@ public class TabbedActivity extends AppCompatActivity {
         });
     }
 
+    /*!
+      Creates a new JSchConnectionProtocol object and sends the command "/sbin/ifconfig" to the SSH Server
+
+      Returns the full output from the command, ifconfig.
+    */
     public String getIfconfig(){
         String output = "getIfconfig() failed";
         try {
@@ -100,6 +137,11 @@ public class TabbedActivity extends AppCompatActivity {
         return output;
     }
 
+    /*!
+      Creates a new JSchConnectionProtocol object and sends the command "/usr/sbin/iwconfig" to the SSH Server
+
+      Returns the full output from the command, iwconfig.
+    */
     public String getIwconfig(){
         String output = "getIfconfig() failed";
         try {
@@ -115,6 +157,9 @@ public class TabbedActivity extends AppCompatActivity {
         return output;
     }
 
+    /*!
+    Inflate the menu; this adds items to the action bar if it is present.
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -122,6 +167,11 @@ public class TabbedActivity extends AppCompatActivity {
         return true;
     }
 
+    /*!
+    Handle action bar item clicks here. The action bar will
+    automatically handle clicks on the Home/Up button, so long
+    as you specify a parent activity in AndroidManifest.xml.
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will

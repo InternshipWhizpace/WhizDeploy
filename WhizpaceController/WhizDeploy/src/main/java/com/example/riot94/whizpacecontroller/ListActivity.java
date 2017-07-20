@@ -14,18 +14,61 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
+/*!
+  An Activity used to display all previous input commands and their respective truncated output.
+*/
 public class ListActivity extends AppCompatActivity {
 
+    /*!
+      A String representing the host's IP Address that the user is trying to connect to.
+    */
     private String host;
+
+    /*!
+      A String representing the username that the user is trying to connect to the SSH Server with.
+    */
     private String user;
+
+    /*!
+      A String representing the password that the user is trying to connect to the SSH Server with.
+    */
     private String pass;
+
+    /*!
+      A Button object that sends the user's command, in, to the SSH Server using JSchConnectionProtocol
+    */
     private Button button;
+
+    /*!
+      An EditText object that allows users to modify the command to send to the SSH Server.
+    */
     private EditText in;
+
+    /*!
+      An ArrayList of Items containing all previous input commands as well as the truncated output.
+    */
     private ArrayList<Item> list;
+
+    /*!
+      A RecyclerView displaying all Items in list.
+    */
     private RecyclerView mRecyclerView;
+
+    /*!
+      An Adapter bridging mRecyclerView and list.
+    */
     private RecyclerView.Adapter mAdapter;
+
+    /*!
+      A LayoutManager to update mRecyclerView when there are changes to the list.
+    */
     private RecyclerView.LayoutManager mLayoutManager;
 
+    /*!
+      Initialises the ListActivity, searches for all components with the corresponding id's in the relevant xml file, and sets the correct values accordingly.
+      The Activity then waits for the user to enter a command.
+      Upon receiving a command, a JSchConnectionProtocol object is created and run. A new item is then added to the list and shown to the user.
+    */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,7 +137,7 @@ public class ListActivity extends AppCompatActivity {
                         e.printStackTrace();
                         Log.d("ExecutionException",e.getLocalizedMessage());
                     }
-                    Toast.makeText(getBaseContext(), output, Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getBaseContext(), output, Toast.LENGTH_LONG).show();
                     list.add(new Item(comd, output));
                     in.setText("");
                     Log.d("ENTERED", "List size = " + list.size());
@@ -107,6 +150,9 @@ public class ListActivity extends AppCompatActivity {
         }
     }
 
+    /*!
+      Converts spaces into new lines. This function serves only to convert the formatting of the output to a more readable format.
+    */
     private String swapSpacesForLine(String s){
         for (int i=8; i>1; i--){
             String spaces = "";
